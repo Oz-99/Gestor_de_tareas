@@ -3,10 +3,22 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  template: `
+    <main class="shell">
+      <router-outlet></router-outlet>
+    </main>
+  `,
+  styles: [
+    `
+      .shell {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        background: #f5f7fb;
+      }
+    `,
+  ],
 })
-export class App {
-  protected readonly title = signal('to-do-frontend');
-}
+export class App {}
