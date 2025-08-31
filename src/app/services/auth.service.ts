@@ -7,21 +7,23 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/auth'; // 👈 ya incluye /auth
+  private apiUrl = 'http://localhost:4000/api/auth'; // 👈 ya incluye /auth
   private loggedInUser: any = null;
 
   constructor(private http: HttpClient) { }
 
-  login(credentials: { correo: string; contraseña: string }): Observable<any> {
-    // 👇 corregido: quité el /auth extra
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
-      tap((response: any) => {
-        if (response.token) {
-          localStorage.setItem('token', response.token); // 🔑 Guarda el token
-        }
-      })
-    );
-  }
+  login(credentials: { correo: string; contrasena: string }): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+    tap((response: any) => {
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+      }
+      if (response.user) {
+        localStorage.setItem('currentUser', JSON.stringify(response.user));
+      }
+    })
+  );
+}
 
   register(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/registro`, userData);

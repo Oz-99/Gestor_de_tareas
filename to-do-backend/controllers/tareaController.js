@@ -14,9 +14,12 @@ export const crearTarea = async (req, res) => {
 // Obtener todas las tareas de un usuario, con opción de filtro (CU4 y CU9)
 export const obtenerTareas = async (req, res) => {
   try {
-    const { estado } = req.query; // Captura el parámetro de consulta 'estado'
+    const { id_usuario, estado } = req.query;
     let filtro = {};
 
+    if (id_usuario) {
+      filtro.id_usuario = id_usuario;
+    }
     if (estado) {
       filtro.estado = estado;
     }

@@ -1,0 +1,19 @@
+<div class="task-list-container">
+  <h2>📝 Mis Tareas</h2>
+  <ul class="task-list">
+    <li
+      *ngFor="let tarea of tareas"
+      class="task-item"
+      [ngClass]="{ completed: tarea.estado === 'completada' }"
+    >
+      <span>{{ tarea.estado === 'completada' ? '✅' : '📌' }} {{ tarea.titulo }}</span>
+
+      <div class="actions">
+        <button class="done" (click)="marcarCompletada(tarea)">✔</button>
+        <button class="edit" (click)="editarTarea(tarea)">✏</button>
+        <button class="delete" (click)="eliminarTarea(tarea._id!)">🗑</button>
+      </div>
+    </li>
+  </ul>
+</div>
+

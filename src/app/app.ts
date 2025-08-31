@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -6,19 +6,7 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet],
   template: `
-    <main class="shell">
-      <router-outlet></router-outlet>
-    </main>
-  `,
-  styles: [
-    `
-      .shell {
-        min-height: 100dvh;
-        display: grid;
-        place-items: center;
-        background: #f5f7fb;
-      }
-    `,
-  ],
+    <router-outlet></router-outlet>
+  `
 })
 export class App {}

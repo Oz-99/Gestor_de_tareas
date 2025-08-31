@@ -1,0 +1,25 @@
+<div class="dashboard-container">
+  <h1>📊Gestor de Tareas - ToDo Web App📊</h1>
+
+  <!-- Estadísticas -->
+  <div class="stats">
+    <div class="card">Total: {{ total }}</div>
+    <div class="card completadas">Completadas: {{ completadas }}</div>
+    <div class="card pendientes">Pendientes: {{ pendientes }}</div>    
+  </div>
+
+  <!-- Layout principal -->
+  <div class="main-content">
+    <!-- Formulario Crear -->
+     
+    <div class="crear-tarea">
+    <h2>{{ tareaSeleccionada ? '✏ Editar Tarea' : '➕ Crear Tarea' }}</h2>               
+      <app-crear [tareaEditando]="tareaSeleccionada"></app-crear>      
+    </div>
+
+    <!-- Lista de Tareas -->
+    <div class="lista-tareas">      
+      <app-lista (editar)="seleccionarTarea($event)"></app-lista>
+    </div>
+  </div>
+</div>
