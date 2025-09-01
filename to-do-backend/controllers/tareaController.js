@@ -1,4 +1,4 @@
-import Tarea from "../models/tarea.js";
+import Tarea from "models/tarea.js";
 
 // Crear una nueva tarea (CU3)
 export const crearTarea = async (req, res) => {

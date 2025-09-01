@@ -29,26 +29,36 @@ export class TareasService {
   /** Cargar tareas del backend */
   cargarTareas(): void {
     const userId = this.authService.getUserId();
+    console.log("🆔 UserId en cargarTareas:", userId);
     if (userId) {
       this.http.get<Tarea[]>(`${this.apiUrl}?id_usuario=${userId}`)
-        .subscribe((tareas) => this.tareasSubject.next(tareas));
+  .subscribe((tareas) => {
+    console.log("📡 Backend devolvió:", tareas);
+    this.tareasSubject.next(tareas);
+  });
     }
   }
 
   /** Crear tarea */
-  crearTarea(tarea: Tarea): Observable<Tarea | null> {
-    const userId = this.authService.getUserId();
-    if (userId) {
-      const nuevaTarea = { ...tarea, id_usuario: userId, estado: 'pendiente' };
-      return this.http.post<Tarea>(this.apiUrl, nuevaTarea).pipe(
-        tap((t) => {
-          const tareas = this.tareasSubject.value;
-          this.tareasSubject.next([...tareas, t]); // 🔥 se actualiza en vivo
-        })
-      );
-    }
-    return of(null);
+  crearTarea(tarea: Partial<Tarea>): Observable<Tarea | null> {
+  const userId = this.authService.getUserId();
+  console.log("🆔 UserId en crearTareas:", userId);
+  if (userId) {
+    const nuevaTarea = { 
+      ...tarea, 
+      id_usuario: userId, 
+      estado: 'pendiente' 
+    };
+    return this.http.post<Tarea>(this.apiUrl, nuevaTarea).pipe(
+      tap((t) => {
+        console.log('👉 Respuesta del backend al crear:', t);
+        const tareas = this.tareasSubject.value;
+        this.tareasSubject.next([...tareas, t]); // 🔥 se actualiza en vivo
+      })
+    );
   }
+  return of(null);
+}
 
   getTareas(): Observable<any> {
     const userId = this.authService.getUserId();

@@ -17,9 +17,12 @@ export class ListaComponent implements OnInit {
   constructor(private tareasService: TareasService) {}
 
   ngOnInit(): void {
-    this.tareasService.tareas$.subscribe((data) => (this.tareas = data));
-    this.tareasService.cargarTareas(); // carga inicial
-  }
+  this.tareasService.tareas$.subscribe((data) => {    
+    this.tareas = data;
+    console.log("📥 ListaComponent recibió tareas:", data);
+  });
+  this.tareasService.cargarTareas();
+}
 
   cargarTareas() {
     this.tareasService.getTareas().subscribe((data) => {

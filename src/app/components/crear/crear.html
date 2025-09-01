@@ -1,5 +1,4 @@
 <div class="crear-tarea-container">
-  
   <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
     
     <div class="form-row">
@@ -31,6 +30,8 @@
       <input id="fechaLimite" type="date" formControlName="fechaLimite">
     </div>
 
-    <button type="submit" [disabled]="tareaForm.invalid">Crear Tarea</button>
+    <button type="submit" [disabled]="tareaForm.invalid">
+      {{ tareaEditando ? 'Actualizar Tarea' : 'Crear Tarea' }}
+    </button>
   </form>
 </div>

@@ -14,8 +14,7 @@ import { CrearComponent } from '../crear/crear';
 export class DashboardComponent implements OnInit {
   total = 0;
   completadas = 0;
-  pendientes = 0;
-  
+  pendientes = 0;  
   tareaSeleccionada: Tarea | null = null;
 
   seleccionarTarea(tarea: Tarea) {
@@ -24,7 +23,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private tareasService: TareasService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {   
+
     this.tareasService.tareas$.subscribe((tareas) => {
       this.total = tareas.length;
       this.completadas = tareas.filter((t) => t.estado === 'completada').length;

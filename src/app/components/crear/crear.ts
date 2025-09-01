@@ -60,7 +60,7 @@ export class CrearComponent {
       // CREAR
       this.tareasService.crearTarea(this.tareaForm.value).subscribe(() => {
         console.log('Tarea creada');
-        this.tareaForm.reset({ prioridad: 'Media' });
+        this.tareaForm.reset({ prioridad: 'Media' });        
       });
     }
   } 
