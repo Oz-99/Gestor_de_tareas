@@ -17,12 +17,12 @@ export class ListaComponent implements OnInit {
   constructor(private tareasService: TareasService) {}
 
   ngOnInit(): void {
-  this.tareasService.tareas$.subscribe((data) => {    
-    this.tareas = data;
-    console.log("📥 ListaComponent recibió tareas:", data);
-  });
-  this.tareasService.cargarTareas();
-}
+    this.tareasService.tareas$.subscribe((data) => {
+      this.tareas = data;
+      console.log('📥 ListaComponent recibió tareas:', data);
+    });
+    this.tareasService.cargarTareas();
+  }
 
   cargarTareas() {
     this.tareasService.getTareas().subscribe((data) => {
@@ -51,5 +51,16 @@ export class ListaComponent implements OnInit {
 
   editarTarea(tarea: Tarea) {
     this.editar.emit(tarea);
+  }
+
+  isVencida(fechaLimite: string | Date): boolean {
+    const limite = new Date(fechaLimite);
+    const hoy = new Date();
+    // Comparar solo fecha (ignorar horas)
+    return limite < new Date(hoy.toDateString());
+  }
+
+  toggleDescripcion(tarea: any) {
+    tarea.expandida = !tarea.expandida;
   }
 }

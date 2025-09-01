@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const usuarioSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
@@ -15,4 +15,4 @@ usuarioSchema.pre('save', async function (next) {
   next();
 });
 
-export default mongoose.model("Usuario", usuarioSchema);
+export default mongoose.model('Usuario', usuarioSchema);

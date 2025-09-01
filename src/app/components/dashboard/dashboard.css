@@ -13,18 +13,57 @@
   padding: 10px 15px;
   border-radius: 8px;
   background: #f4f4f4;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.completadas { background: #d4edda; }
-.pendientes { background: #f8d7da; }
-.progreso { background: #fff3cd; }
+.completadas {
+  background: #d4edda;
+}
+.pendientes {
+  background: #f8d7da;
+}
+.progreso {
+  background: #fff3cd;
+}
 
 .main-content {
   display: flex;
   gap: 20px;
 }
 
-.crear-tarea, .lista-tareas {
+.crear-tarea,
+.lista-tareas {
   flex: 1;
+}
+
+.logout-container {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.logout-btn:hover {
+  background-color: #d62828;
+  transform: scale(1.05);
+}
+
+.logout-btn .material-icons {
+  font-size: 18px;
 }

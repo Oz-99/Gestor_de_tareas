@@ -1,5 +1,5 @@
 import express from 'express';
-import Tarea from '../models/Tarea.js';
+import Tarea from '../models/tarea.js';
 
 const router = express.Router();
 
@@ -29,11 +29,7 @@ router.post('/', async (req, res) => {
 // 📌 PUT actualizar tarea
 router.put('/:id', async (req, res) => {
   try {
-    const tareaActualizada = await Tarea.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const tareaActualizada = await Tarea.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(tareaActualizada);
   } catch (error) {
     res.status(500).json({ error: 'Error al actualizar tarea' });

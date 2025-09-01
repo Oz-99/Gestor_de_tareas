@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TareasService, Tarea } from '../../services/tareas';
 import { CommonModule } from '@angular/common';
@@ -10,9 +10,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './crear.html',
   styleUrls: ['./crear.css'],
 })
-
 export class CrearComponent {
-  // Usamos un setter para parchear el formulario cuando llega una tarea a editar
+  // Evento para avisar al dashboard cuando se guarda la tarea
+  @Output() tareaGuardada = new EventEmitter<void>();
+
   private _tareaEditando: Tarea | null = null;
 
   @Input() set tareaEditando(value: Tarea | null) {
@@ -55,14 +56,15 @@ export class CrearComponent {
           console.log('Tarea actualizada');
           this.tareaEditando = null; // limpia modo edición
           this.tareaForm.reset({ prioridad: 'Media' });
+          this.tareaGuardada.emit(); // 🔥 Avisamos al dashboard
         });
     } else {
       // CREAR
       this.tareasService.crearTarea(this.tareaForm.value).subscribe(() => {
         console.log('Tarea creada');
-        this.tareaForm.reset({ prioridad: 'Media' });        
+        this.tareaForm.reset({ prioridad: 'Media' });
+        this.tareaGuardada.emit(); // 🔥 Avisamos al dashboard
       });
     }
-  } 
+  }
 }
-

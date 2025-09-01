@@ -4,23 +4,38 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private apiUrl = 'http://localhost:4000/api/auth'; // 👈 ya incluye /auth
   private loggedInUser: any = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
+  private decodeToken(token: string): any {
+    try {
+      return JSON.parse(atob(token.split('.')[1])); // payload del JWT
+    } catch (e) {
+      return null;
+    }
+  }
 
   login(credentials: { correo: string; contrasena: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap((response: any) => {
         if (response.token) {
           localStorage.setItem('token', response.token);
-        }
-        if (response.user) {
-          localStorage.setItem('currentUser', JSON.stringify(response.user));
+          const payload = this.decodeToken(response.token);
+          if (payload) {
+            localStorage.setItem(
+              'currentUser',
+              JSON.stringify({
+                id: payload.id,
+                correo: payload.correo,
+                nombre: payload.nombre || payload.correo, // 👈 fallback
+              })
+            );
+          }
         }
       })
     );
@@ -52,5 +67,14 @@ export class AuthService {
       console.error('❌ Error decodificando token', error);
       return null;
     }
+  }
+
+  getUserNombre(): string | null {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      return user.nombre || user.correo || null; // 👈 prioridad al nombre
+    }
+    return null;
   }
 }

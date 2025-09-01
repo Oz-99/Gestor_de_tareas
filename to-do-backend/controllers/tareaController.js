@@ -1,4 +1,4 @@
-import Tarea from "models/tarea.js";
+import Tarea from 'models/tarea.js';
 
 // Crear una nueva tarea (CU3)
 export const crearTarea = async (req, res) => {
@@ -7,7 +7,7 @@ export const crearTarea = async (req, res) => {
     await nuevaTarea.save();
     res.status(201).json(nuevaTarea);
   } catch (error) {
-    res.status(400).json({ msg: "Error al crear la tarea", error });
+    res.status(400).json({ msg: 'Error al crear la tarea', error });
   }
 };
 
@@ -27,7 +27,7 @@ export const obtenerTareas = async (req, res) => {
     const tareas = await Tarea.find(filtro);
     res.status(200).json(tareas);
   } catch (error) {
-    res.status(500).json({ msg: "Error al obtener las tareas", error });
+    res.status(500).json({ msg: 'Error al obtener las tareas', error });
   }
 };
 
@@ -37,11 +37,11 @@ export const actualizarTarea = async (req, res) => {
     const { id } = req.params;
     const tareaActualizada = await Tarea.findByIdAndUpdate(id, req.body, { new: true });
     if (!tareaActualizada) {
-      return res.status(404).json({ msg: "Tarea no encontrada" });
+      return res.status(404).json({ msg: 'Tarea no encontrada' });
     }
     res.status(200).json(tareaActualizada);
   } catch (error) {
-    res.status(400).json({ msg: "Error al actualizar la tarea", error });
+    res.status(400).json({ msg: 'Error al actualizar la tarea', error });
   }
 };
 
@@ -51,10 +51,10 @@ export const eliminarTarea = async (req, res) => {
     const { id } = req.params;
     const tareaEliminada = await Tarea.findByIdAndDelete(id);
     if (!tareaEliminada) {
-      return res.status(404).json({ msg: "Tarea no encontrada" });
+      return res.status(404).json({ msg: 'Tarea no encontrada' });
     }
-    res.status(200).json({ msg: "Tarea eliminada exitosamente" });
+    res.status(200).json({ msg: 'Tarea eliminada exitosamente' });
   } catch (error) {
-    res.status(500).json({ msg: "Error al eliminar la tarea", error });
+    res.status(500).json({ msg: 'Error al eliminar la tarea', error });
   }
 };

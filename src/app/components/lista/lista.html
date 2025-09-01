@@ -6,14 +6,44 @@
       class="task-item"
       [ngClass]="{ completed: tarea.estado === 'completada' }"
     >
-      <span>{{ tarea.estado === 'completada' ? '✅' : '📌' }} {{ tarea.titulo }}</span>
+      <!-- Encabezado (título + flecha + botones) -->
+      <div class="task-info">
+        <span class="task-title" (click)="toggleDescripcion(tarea)">
+          {{ tarea.estado === 'completada' ? '✅' : '📌' }} {{ tarea.titulo }}
+          <span class="toggle-arrow">
+            {{ tarea.expandida ? '🔽' : '▶️' }}
+          </span>
+        </span>
 
-      <div class="actions">
-        <button class="done" (click)="marcarCompletada(tarea)">✔</button>
-        <button class="edit" (click)="editarTarea(tarea)">✏</button>
-        <button class="delete" (click)="eliminarTarea(tarea._id!)">🗑</button>
+        <!-- Botones a la derecha -->
+        <div class="actions">
+          <button class="done" (click)="marcarCompletada(tarea)">✔</button>
+          <button class="edit" (click)="editarTarea(tarea)">✏</button>
+          <button class="delete" (click)="eliminarTarea(tarea._id!)">🗑</button>
+        </div>
+      </div>
+
+      <!-- Acordeón debajo -->
+      <div class="task-detalle" *ngIf="tarea.expandida">
+        <p class="task-desc">➡️ {{ tarea.descripcion }}</p>
+        <p
+          class="task-prioridad"
+          [ngClass]="{
+            'prioridad-alta': tarea.prioridad === 'Alta',
+            'prioridad-media': tarea.prioridad === 'Media',
+            'prioridad-baja': tarea.prioridad === 'Baja'
+          }"
+        >
+          🔥 Prioridad: {{ tarea.prioridad }}
+        </p>
+        <p
+          class="task-fecha"
+          *ngIf="tarea.fechaLimite"
+          [ngClass]="{ 'fecha-vencida': isVencida(tarea.fechaLimite) }"
+        >
+          📅 Fecha límite: {{ tarea.fechaLimite | date : 'dd/MM/yyyy' }}
+        </p>
       </div>
     </li>
   </ul>
 </div>
-

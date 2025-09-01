@@ -9,32 +9,28 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: 'register.html',
-  styleUrls: ['register.css']
+  styleUrls: ['register.css'],
 })
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       nombre: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
-      contrasena: ['', [Validators.required, Validators.minLength(6)]]
+      contrasena: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   onSubmit() {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe(
-        response => {
+        (response) => {
           console.log('Registro exitoso', response);
           alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
           this.router.navigate(['/login']);
         },
-        error => {
+        (error) => {
           console.error('Error en el registro', error);
           alert('Error en el registro. Por favor, intenta de nuevo.');
         }

@@ -22,30 +22,29 @@ export class LoginComponent {
   }
 
   onSubmit() {
-
     console.log(this.loginForm.value);
-    
-  if (this.loginForm.valid) {
-    this.authService.login(this.loginForm.value).subscribe(
-      (response: any) => {
-        console.log('Login exitoso', response);
 
-        // 🔍 Log para verificar si llega token
-        console.log('Token recibido:', response.token);
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value).subscribe(
+        (response: any) => {
+          console.log('Login exitoso', response);
 
-        if (response.token) {
-          localStorage.setItem('token', response.token);
-        } else {
-          console.error('⚠️ No se recibió token en la respuesta');
+          // 🔍 Log para verificar si llega token
+          console.log('Token recibido:', response.token);
+
+          if (response.token) {
+            localStorage.setItem('token', response.token);
+          } else {
+            console.error('⚠️ No se recibió token en la respuesta');
+          }
+
+          this.router.navigate(['/dashboard']);
+        },
+        (error) => {
+          console.error('Error en el login', error);
+          alert('Credenciales incorrectas. Por favor, intenta de nuevo.');
         }
-
-        this.router.navigate(['/dashboard']);
-      },
-      error => {
-        console.error('Error en el login', error);
-        alert('Credenciales incorrectas. Por favor, intenta de nuevo.');
-      }
-    );
+      );
+    }
   }
-}
 }
